@@ -17,7 +17,9 @@ const CheckoutBarang = () => {
     const [visibleCreateAlamat, setVisibleCreateAlamat] = useState(false);
     const [visibleUpdateModal, setVisibleUpdateModal] = useState(false);
     const [selectedAlamat, setSelectedAlamat] = useState(null);
-    const [shippingCosts, setShippingCosts] = useState({});
+    // const [shippingCosts, setShippingCosts] = useState({});
+    const [availableServices, setAvailableServices] = useState({});
+    const [selectedServiceCost, setSelectedServiceCost] = useState({});
     const { register: registerCreate, handleSubmit: handleSubmitCreate, reset: resetCreate, setValue: setValueCreate } = useForm();
     const { register: registerUpdate, handleSubmit: handleSubmitUpdate, reset: resetUpdate, setValue: setValueUpdate } = useForm();
 
@@ -105,16 +107,27 @@ const CheckoutBarang = () => {
             userId: userId
         };
         const ongkir = await getOngkir(data);
-        const biaya = ongkir.data.ongkir.rajaongkir.results[0].costs[0].cost[0].value;
-        setShippingCosts((prevCosts) => ({
-            ...prevCosts,
-            [products.id]: biaya
+        const services = ongkir.data.ongkir.rajaongkir.results[0].costs;
+        console.log('services', services);
+
+        setAvailableServices((prevServices) => ({
+            ...prevServices,
+            [products.id]: services
         }));
+
+        // setShippingCosts((prevCosts) => ({
+        //     ...prevCosts,
+        //     [products.id]: biaya
+        // }));
     }
 
-    const totalShippingCost = Object.values(shippingCosts).reduce((acc, cost) => acc + cost, 0);
+    // const totalShippingCost = Object.values(shippingCosts).reduce((acc, cost) => acc + cost, 0);
 
-    let totalAmountCheckout = calculateTotalCheckout() + totalShippingCost;
+    // let totalAmountCheckout = calculateTotalCheckout() + totalShippingCost;
+    console.log('available service', availableServices);
+    console.log('selected service', selectedServiceCost);
+
+
 
 
     return (
@@ -287,6 +300,29 @@ const CheckoutBarang = () => {
                                 <option value="pos">POS</option>
                             </select>
                         </div>
+                        {availableServices[products.id] && (
+                            <div className='p-6 space-x-3 my-3'>
+                                <label className='font-semibold' htmlFor="service-options">Opsi Layanan:</label>
+                                <select className='w-1/2' defaultValue="" onChange={(event) => {
+                                    const service = event.target.value;
+                                    const selectedService = availableServices[products.id][service];
+                                    const biaya = selectedService.cost[0].value;
+
+
+                                    setSelectedServiceCost((prevSelectedServiceCost) => ({
+                                        ...prevSelectedServiceCost,
+                                        [products.id]: biaya
+                                    }));
+                                }}>
+                                    <option value="" disabled>Pilih Layanan</option>
+                                    {availableServices[products.id].map((service, index) => (
+                                        <option key={index} value={index}>
+                                            {service.service} - {service.cost[0].etd} hari - Rp {service.cost[0].value}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>
@@ -324,7 +360,7 @@ const CheckoutBarang = () => {
                         </div>
                         <div className='flex justify-between'>
                             <p className='text-gray-600 me-16'>Total Pembayaran</p>
-                            <p className='font-bold text-2xl text-slate-600'>{formatter.format(totalAmountCheckout)}</p>
+                            <p className='font-bold text-2xl text-slate-600'>{formatter.format(calculateTotalCheckout())}</p>
                         </div>
                     </div>
                 </div>
