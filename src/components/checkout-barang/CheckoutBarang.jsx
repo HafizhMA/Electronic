@@ -121,9 +121,10 @@ const CheckoutBarang = () => {
         // }));
     }
 
-    // const totalShippingCost = Object.values(shippingCosts).reduce((acc, cost) => acc + cost, 0);
 
-    // let totalAmountCheckout = calculateTotalCheckout() + totalShippingCost;
+    const totalCostShipment = Object.values(selectedServiceCost).reduce((acc, value) => acc + value, 0);
+
+    let totalAmountCheckout = calculateTotalCheckout() + totalCostShipment;
     console.log('available service', availableServices);
     console.log('selected service', selectedServiceCost);
 
@@ -338,7 +339,7 @@ const CheckoutBarang = () => {
                 </div>
                 <div className='flex justify-end'>
                     <p className='me-4'>Total Pesanan ({checkoutProducts.length} produk):</p>
-                    <p className='text-slate-600 font-semibold'>{formatter.format(calculateTotalCheckout())}</p>
+                    <p className='text-slate-600 font-semibold'>{formatter.format(totalAmountCheckout)}</p>
                 </div>
             </div>
 
@@ -356,11 +357,11 @@ const CheckoutBarang = () => {
                     <div className='pembungkus'>
                         <div className='flex mb-3 text-gray-600 justify-between'>
                             <p className='me-16'>Subtotal untuk produk</p>
-                            <p>{formatter.format(calculateTotalCheckout())}</p>
+                            <p>{formatter.format(totalAmountCheckout)}</p>
                         </div>
                         <div className='flex justify-between'>
                             <p className='text-gray-600 me-16'>Total Pembayaran</p>
-                            <p className='font-bold text-2xl text-slate-600'>{formatter.format(calculateTotalCheckout())}</p>
+                            <p className='font-bold text-2xl text-slate-600'>{formatter.format(totalAmountCheckout)}</p>
                         </div>
                     </div>
                 </div>
