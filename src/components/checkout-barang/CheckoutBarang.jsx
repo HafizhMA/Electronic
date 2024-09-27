@@ -17,9 +17,9 @@ const CheckoutBarang = () => {
     const [visibleCreateAlamat, setVisibleCreateAlamat] = useState(false);
     const [visibleUpdateModal, setVisibleUpdateModal] = useState(false);
     const [selectedAlamat, setSelectedAlamat] = useState(null);
-    // const [shippingCosts, setShippingCosts] = useState({});
     const [availableServices, setAvailableServices] = useState({});
     const [selectedServiceCost, setSelectedServiceCost] = useState({});
+    const [loadingService, setLoadingService] = useState({});
     const { register: registerCreate, handleSubmit: handleSubmitCreate, reset: resetCreate, setValue: setValueCreate } = useForm();
     const { register: registerUpdate, handleSubmit: handleSubmitUpdate, reset: resetUpdate, setValue: setValueUpdate } = useForm();
 
@@ -96,29 +96,32 @@ const CheckoutBarang = () => {
     }
 
     const handleSelectService = async (event, products) => {
-        const userId = localStorage.getItem('userid');
-        const selectedService = event.target.value;
-        const alamatPenjual = products.product.user.AlamatPengiriman[0];
-        const checkout = products.product;
-        const data = {
-            service: selectedService,
-            alamatPenjual: alamatPenjual,
-            checkoutProduct: checkout,
-            userId: userId
-        };
-        const ongkir = await getOngkir(data);
-        const services = ongkir.data.ongkir.rajaongkir.results[0].costs;
-        console.log('services', services);
+        setLoadingService((prev) => ({ ...prev, [products.id]: true }));
+        try {
+            const userId = localStorage.getItem('userid');
+            const selectedService = event.target.value;
+            const alamatPenjual = products.product.user.AlamatPengiriman[0];
+            const checkout = products.product;
+            const data = {
+                service: selectedService,
+                alamatPenjual: alamatPenjual,
+                checkoutProduct: checkout,
+                userId: userId
+            };
+            const ongkir = await getOngkir(data);
+            const services = ongkir.data.ongkir.rajaongkir.results[0].costs;
+            console.log('services', services);
 
-        setAvailableServices((prevServices) => ({
-            ...prevServices,
-            [products.id]: services
-        }));
+            setAvailableServices((prevServices) => ({
+                ...prevServices,
+                [products.id]: services
+            }));
+        } catch (error) {
+            console.error('failed get ongkir', error);
+        } finally {
+            setLoadingService((prev) => ({ ...prev, [products.id]: false }));
+        }
 
-        // setShippingCosts((prevCosts) => ({
-        //     ...prevCosts,
-        //     [products.id]: biaya
-        // }));
     }
 
 
@@ -127,9 +130,6 @@ const CheckoutBarang = () => {
     let totalAmountCheckout = calculateTotalCheckout() + totalCostShipment;
     console.log('available service', availableServices);
     console.log('selected service', selectedServiceCost);
-
-
-
 
     return (
         <div className='py-[100px] container mx-auto'>
@@ -293,13 +293,18 @@ const CheckoutBarang = () => {
                                 </Table.Row>
                             </Table.Body>
                         </Table>
-                        <div className='ps-6 space-x-3 my-3'>
+                        <div className='ps-6 space-x-3 my-3 flex'>
                             <label className='font-semibold' htmlFor="jasa-pengiriman">Opsi Pengiriman:</label>
                             <select className='w-1/2' defaultValue="" onChange={(event) => handleSelectService(event, products)}>
                                 <option value="" disabled>Pilih Pengiriman</option>
                                 <option value="jne">JNE</option>
                                 <option value="pos">POS</option>
                             </select>
+                            {loadingService[products.id] && (
+                                <>
+                                    <p className='ms-6'>Loading...</p>
+                                </>
+                            )}
                         </div>
                         {availableServices[products.id] && (
                             <div className='p-6 space-x-3 my-3'>
