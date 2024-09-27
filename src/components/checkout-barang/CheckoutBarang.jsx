@@ -337,10 +337,21 @@ const CheckoutBarang = () => {
                         </form>
                     </div>
                 </div>
-                <div className='flex justify-end'>
-                    <p className='me-4'>Total Pesanan ({checkoutProducts.length} produk):</p>
-                    <p className='text-slate-600 font-semibold'>{formatter.format(totalAmountCheckout)}</p>
+                <div className='text-end flex justify-end'>
+                    <div>
+                        {Object.keys(selectedServiceCost).length > 0 && (
+                            <div className='flex justify-between'>
+                                <p className='me-4'>Total Ongkir ({Object.keys(selectedServiceCost).length} produk):</p>
+                                <p className='text-slate-600 font-semibold'>{formatter.format(totalCostShipment)}</p>
+                            </div>
+                        )}
+                        <div className='flex justify-between'>
+                            <p className='me-4'>Total Pesanan ({checkoutProducts.length} produk):</p>
+                            <p className='text-slate-600 font-semibold'>{formatter.format(calculateTotalCheckout())}</p>
+                        </div>
+                    </div>
                 </div>
+
             </div>
 
             <div className='metode-pembayaran p-5 rounded bg-white'>
