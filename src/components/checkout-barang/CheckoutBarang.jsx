@@ -360,16 +360,7 @@ const CheckoutBarang = () => {
             </div>
 
             <div className='metode-pembayaran p-5 rounded bg-white'>
-                <div className='flex justify-between mb-7'>
-                    <p className='font-semibold'>Metode Pembayaran</p>
-                    <div className='flex'>
-                        <p> COD (bayar ditempat)</p>
-                        <button className='text-blue-400 font-semibold ms-3'>Ubah</button>
-                    </div>
-                </div>
-                <hr />
-                <br />
-                <div className='total-perhitungan flex justify-end mb-16'>
+                <div className='total-perhitungan flex justify-end mt-16 mb-3'>
                     <div className='pembungkus'>
                         <div className='flex mb-3 text-gray-600 justify-between'>
                             <p className='me-16'>Subtotal untuk produk</p>
@@ -384,7 +375,7 @@ const CheckoutBarang = () => {
                 <hr />
                 <br />
                 <div className='flex justify-end'>
-                    <button className='p-3 bg-slate-600 text-white font-semibold rounded px-8'>Buat Pesanan</button>
+                    <button className='p-3 bg-slate-600 text-white font-semibold rounded px-8'>Pilih Pembayaran</button>
                 </div>
             </div>
         </div>
