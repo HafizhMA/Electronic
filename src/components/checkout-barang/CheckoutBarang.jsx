@@ -6,7 +6,7 @@ import { CheckoutContext } from '../../utils/CheckoutContext';
 import { formatter } from '../../utils/formatIDR';
 import AlamatModal from './AlamatModal';
 import { useForm } from 'react-hook-form';
-import { apiService, createAlamat, deleteAlamat, getOngkir, setAlamat, updateAlamat } from '../../services/apiServices';
+import { apiService, connectJasaToCartItems, createAlamat, deleteAlamat, getOngkir, setAlamat, updateAlamat } from '../../services/apiServices';
 import { toast, ToastContainer } from 'react-toastify';
 import ProvinsiOption from './ProvinsiOption';
 import CityOption from './CityOption';
@@ -17,9 +17,9 @@ const CheckoutBarang = () => {
     const [visibleCreateAlamat, setVisibleCreateAlamat] = useState(false);
     const [visibleUpdateModal, setVisibleUpdateModal] = useState(false);
     const [selectedAlamat, setSelectedAlamat] = useState(null);
-    // const [shippingCosts, setShippingCosts] = useState({});
     const [availableServices, setAvailableServices] = useState({});
     const [selectedServiceCost, setSelectedServiceCost] = useState({});
+    const [loadingService, setLoadingService] = useState({});
     const { register: registerCreate, handleSubmit: handleSubmitCreate, reset: resetCreate, setValue: setValueCreate } = useForm();
     const { register: registerUpdate, handleSubmit: handleSubmitUpdate, reset: resetUpdate, setValue: setValueUpdate } = useForm();
 
@@ -96,29 +96,32 @@ const CheckoutBarang = () => {
     }
 
     const handleSelectService = async (event, products) => {
-        const userId = localStorage.getItem('userid');
-        const selectedService = event.target.value;
-        const alamatPenjual = products.product.user.AlamatPengiriman[0];
-        const checkout = products.product;
-        const data = {
-            service: selectedService,
-            alamatPenjual: alamatPenjual,
-            checkoutProduct: checkout,
-            userId: userId
-        };
-        const ongkir = await getOngkir(data);
-        const services = ongkir.data.ongkir.rajaongkir.results[0].costs;
-        console.log('services', services);
+        setLoadingService((prev) => ({ ...prev, [products.id]: true }));
+        try {
+            const userId = localStorage.getItem('userid');
+            const selectedService = event.target.value;
+            const alamatPenjual = products.product.user.AlamatPengiriman[0];
+            const checkout = products.product;
+            const data = {
+                service: selectedService,
+                alamatPenjual: alamatPenjual,
+                checkoutProduct: checkout,
+                userId: userId
+            };
+            const ongkir = await getOngkir(data);
+            const services = ongkir.data.ongkir.rajaongkir.results[0].costs;
+            console.log('services', services);
 
-        setAvailableServices((prevServices) => ({
-            ...prevServices,
-            [products.id]: services
-        }));
+            setAvailableServices((prevServices) => ({
+                ...prevServices,
+                [products.id]: services
+            }));
+        } catch (error) {
+            console.error('failed get ongkir', error);
+        } finally {
+            setLoadingService((prev) => ({ ...prev, [products.id]: false }));
+        }
 
-        // setShippingCosts((prevCosts) => ({
-        //     ...prevCosts,
-        //     [products.id]: biaya
-        // }));
     }
 
 
@@ -127,9 +130,6 @@ const CheckoutBarang = () => {
     let totalAmountCheckout = calculateTotalCheckout() + totalCostShipment;
     console.log('available service', availableServices);
     console.log('selected service', selectedServiceCost);
-
-
-
 
     return (
         <div className='py-[100px] container mx-auto'>
@@ -293,27 +293,46 @@ const CheckoutBarang = () => {
                                 </Table.Row>
                             </Table.Body>
                         </Table>
-                        <div className='ps-6 space-x-3 my-3'>
+                        <div className='ps-6 space-x-3 my-3 flex'>
                             <label className='font-semibold' htmlFor="jasa-pengiriman">Opsi Pengiriman:</label>
                             <select className='w-1/2' defaultValue="" onChange={(event) => handleSelectService(event, products)}>
                                 <option value="" disabled>Pilih Pengiriman</option>
                                 <option value="jne">JNE</option>
                                 <option value="pos">POS</option>
                             </select>
+                            {loadingService[products.id] && (
+                                <>
+                                    <p className='ms-6'>Loading...</p>
+                                </>
+                            )}
                         </div>
                         {availableServices[products.id] && (
                             <div className='p-6 space-x-3 my-3'>
                                 <label className='font-semibold' htmlFor="service-options">Opsi Layanan:</label>
-                                <select className='w-1/2' defaultValue="" onChange={(event) => {
+                                <select className='w-1/2' defaultValue="" onChange={async (event) => {
                                     const service = event.target.value;
                                     const selectedService = availableServices[products.id][service];
+                                    const services = selectedService.service;
                                     const biaya = selectedService.cost[0].value;
+                                    const estimated = selectedService.cost[0].etd
 
+
+                                    const newServiceCost = {
+                                        id: products.id,
+                                        services: services,
+                                        biaya: biaya,
+                                        estimates: estimated
+                                    };
 
                                     setSelectedServiceCost((prevSelectedServiceCost) => ({
                                         ...prevSelectedServiceCost,
                                         [products.id]: biaya
                                     }));
+
+                                    await connectJasaToCartItems({
+                                        newServiceCost
+                                    });
+
                                 }}>
                                     <option value="" disabled>Pilih Layanan</option>
                                     {availableServices[products.id].map((service, index) => (
@@ -337,23 +356,25 @@ const CheckoutBarang = () => {
                         </form>
                     </div>
                 </div>
-                <div className='flex justify-end'>
-                    <p className='me-4'>Total Pesanan ({checkoutProducts.length} produk):</p>
-                    <p className='text-slate-600 font-semibold'>{formatter.format(totalAmountCheckout)}</p>
+                <div className='text-end flex justify-end'>
+                    <div>
+                        {Object.keys(selectedServiceCost).length > 0 && (
+                            <div className='flex justify-between'>
+                                <p className='me-4'>Total Ongkir ({Object.keys(selectedServiceCost).length} produk):</p>
+                                <p className='text-slate-600 font-semibold'>{formatter.format(totalCostShipment)}</p>
+                            </div>
+                        )}
+                        <div className='flex justify-between'>
+                            <p className='me-4'>Total Pesanan ({checkoutProducts.length} produk):</p>
+                            <p className='text-slate-600 font-semibold'>{formatter.format(calculateTotalCheckout())}</p>
+                        </div>
+                    </div>
                 </div>
+
             </div>
 
             <div className='metode-pembayaran p-5 rounded bg-white'>
-                <div className='flex justify-between mb-7'>
-                    <p className='font-semibold'>Metode Pembayaran</p>
-                    <div className='flex'>
-                        <p> COD (bayar ditempat)</p>
-                        <button className='text-blue-400 font-semibold ms-3'>Ubah</button>
-                    </div>
-                </div>
-                <hr />
-                <br />
-                <div className='total-perhitungan flex justify-end mb-16'>
+                <div className='total-perhitungan flex justify-end mt-16 mb-3'>
                     <div className='pembungkus'>
                         <div className='flex mb-3 text-gray-600 justify-between'>
                             <p className='me-16'>Subtotal untuk produk</p>
@@ -368,7 +389,7 @@ const CheckoutBarang = () => {
                 <hr />
                 <br />
                 <div className='flex justify-end'>
-                    <button className='p-3 bg-slate-600 text-white font-semibold rounded px-8'>Buat Pesanan</button>
+                    <button className='p-3 bg-slate-600 text-white font-semibold rounded px-8'>Pilih Pembayaran</button>
                 </div>
             </div>
         </div>

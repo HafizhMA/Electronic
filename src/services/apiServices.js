@@ -276,3 +276,13 @@ export const getOngkir = async (data) => {
     throw error;
   }
 }
+
+export const connectJasaToCartItems = async (data) => {
+  try {
+    const response = await apiService.post(`/connectJasaCart`, { data });
+    return response;
+  } catch (error) {
+    console.error('failed fetch endpoint', error);
+    throw error;
+  }
+}
