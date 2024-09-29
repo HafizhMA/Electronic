@@ -6,7 +6,7 @@ import { CheckoutContext } from '../../utils/CheckoutContext';
 import { formatter } from '../../utils/formatIDR';
 import AlamatModal from './AlamatModal';
 import { useForm } from 'react-hook-form';
-import { apiService, createAlamat, deleteAlamat, getOngkir, setAlamat, updateAlamat } from '../../services/apiServices';
+import { apiService, connectJasaToCartItems, createAlamat, deleteAlamat, getOngkir, setAlamat, updateAlamat } from '../../services/apiServices';
 import { toast, ToastContainer } from 'react-toastify';
 import ProvinsiOption from './ProvinsiOption';
 import CityOption from './CityOption';
@@ -309,16 +309,30 @@ const CheckoutBarang = () => {
                         {availableServices[products.id] && (
                             <div className='p-6 space-x-3 my-3'>
                                 <label className='font-semibold' htmlFor="service-options">Opsi Layanan:</label>
-                                <select className='w-1/2' defaultValue="" onChange={(event) => {
+                                <select className='w-1/2' defaultValue="" onChange={async (event) => {
                                     const service = event.target.value;
                                     const selectedService = availableServices[products.id][service];
+                                    const services = selectedService.service;
                                     const biaya = selectedService.cost[0].value;
+                                    const estimated = selectedService.cost[0].etd
 
+
+                                    const newServiceCost = {
+                                        id: products.id,
+                                        services: services,
+                                        biaya: biaya,
+                                        estimates: estimated
+                                    };
 
                                     setSelectedServiceCost((prevSelectedServiceCost) => ({
                                         ...prevSelectedServiceCost,
                                         [products.id]: biaya
                                     }));
+
+                                    await connectJasaToCartItems({
+                                        newServiceCost
+                                    });
+
                                 }}>
                                     <option value="" disabled>Pilih Layanan</option>
                                     {availableServices[products.id].map((service, index) => (
