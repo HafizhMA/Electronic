@@ -6,13 +6,13 @@ import { CheckoutContext } from '../../utils/CheckoutContext';
 import { formatter } from '../../utils/formatIDR';
 import AlamatModal from './AlamatModal';
 import { useForm } from 'react-hook-form';
-import { apiService, connectJasaToCartItems, createAlamat, deleteAlamat, getOngkir, setAlamat, updateAlamat } from '../../services/apiServices';
+import { connectJasaToCartItems, createAlamat, deleteAlamat, getOngkir, postPesan, setAlamat, updateAlamat } from '../../services/apiServices';
 import { toast, ToastContainer } from 'react-toastify';
 import ProvinsiOption from './ProvinsiOption';
 import CityOption from './CityOption';
 
 const CheckoutBarang = () => {
-    const { checkoutProducts, calculateTotalCheckout, alamatPengirim } = useContext(CheckoutContext);
+    const { checkoutProducts, calculateTotalCheckout, alamatPengirim, checkout } = useContext(CheckoutContext);
     const [visibleModal, setVisibleModal] = useState(false);
     const [visibleCreateAlamat, setVisibleCreateAlamat] = useState(false);
     const [visibleUpdateModal, setVisibleUpdateModal] = useState(false);
@@ -20,6 +20,7 @@ const CheckoutBarang = () => {
     const [availableServices, setAvailableServices] = useState({});
     const [selectedServiceCost, setSelectedServiceCost] = useState({});
     const [loadingService, setLoadingService] = useState({});
+    const [pesan, setPesan] = useState("");
     const { register: registerCreate, handleSubmit: handleSubmitCreate, reset: resetCreate, setValue: setValueCreate } = useForm();
     const { register: registerUpdate, handleSubmit: handleSubmitUpdate, reset: resetUpdate, setValue: setValueUpdate } = useForm();
 
@@ -121,15 +122,21 @@ const CheckoutBarang = () => {
         } finally {
             setLoadingService((prev) => ({ ...prev, [products.id]: false }));
         }
+    }
 
+    const handlePayment = async () => {
+        const datas = {
+            id: checkout[0].id,
+            pesan: pesan
+        }
+        const pesanPost = await postPesan(datas);
+        console.log('success post pesan', pesanPost)
     }
 
 
     const totalCostShipment = Object.values(selectedServiceCost).reduce((acc, value) => acc + value, 0);
 
     let totalAmountCheckout = calculateTotalCheckout() + totalCostShipment;
-    console.log('available service', availableServices);
-    console.log('selected service', selectedServiceCost);
 
     return (
         <div className='py-[100px] container mx-auto'>
@@ -352,7 +359,7 @@ const CheckoutBarang = () => {
                     <div className='pesan mb-6'>
                         <form>
                             <label htmlFor="text" className='me-3 font-semibold'>Pesan:</label>
-                            <input type="text" placeholder='(opsional)' className='rounded-sm w-[90%]' />
+                            <input type="text" placeholder='(opsional)' value={pesan} onChange={(e) => setPesan(e.target.value)} className='rounded-sm w-[90%]' />
                         </form>
                     </div>
                 </div>
@@ -389,7 +396,7 @@ const CheckoutBarang = () => {
                 <hr />
                 <br />
                 <div className='flex justify-end'>
-                    <button className='p-3 bg-slate-600 text-white font-semibold rounded px-8'>Pilih Pembayaran</button>
+                    <button onClick={handlePayment} className='p-3 bg-slate-600 text-white font-semibold rounded px-8'>Pilih Pembayaran</button>
                 </div>
             </div>
         </div>

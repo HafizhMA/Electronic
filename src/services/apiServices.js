@@ -286,3 +286,13 @@ export const connectJasaToCartItems = async (data) => {
     throw error;
   }
 }
+
+export const postPesan = async (data) => {
+  try {
+    const response = await apiService.post(`/postPesan`, { data });
+    return response;
+  } catch (error) {
+    console.error('failed post pesan', error);
+    throw error;
+  }
+}
