@@ -5,16 +5,20 @@ export const CheckoutContext = createContext();
 
 export const CheckoutProvider = ({ children }) => {
     const [checkoutProducts, setCheckoutProducts] = useState([]);
+    const [checkout, setCheckout] = useState([]);
     const [alamatPengirim, setAlamatPengirim] = useState([]);
 
     const fetchcheckoutProducts = async () => {
         const userid = localStorage.getItem('userid')
         try {
             const response = await getCheckoutProducts();
-            const datas = response.data.checkoutProduct[0].items;
-            const dataCheckout = datas.filter(data => data.userId === userid);
-            setCheckoutProducts(dataCheckout)
-            console.log('response checkout:', dataCheckout);
+            const checkouts = response.data.checkoutProduct;
+            const checkoutProduct = checkouts.filter(checkout => checkout.userId === userid)
+            const datas = checkoutProduct[0].items;
+            setCheckoutProducts(datas);
+            setCheckout(checkoutProduct);
+            console.log('checkout', checkoutProduct);
+            console.log('response checkout:', datas);
         } catch (error) {
             console.error('failed get checkout products', error);
         }
@@ -46,6 +50,6 @@ export const CheckoutProvider = ({ children }) => {
     };
 
     return (
-        <CheckoutContext.Provider value={{ checkoutProducts, calculateTotalCheckout, alamatPengirim }}>{children}</CheckoutContext.Provider>
+        <CheckoutContext.Provider value={{ checkoutProducts, calculateTotalCheckout, alamatPengirim, checkout }}>{children}</CheckoutContext.Provider>
     )
 }
