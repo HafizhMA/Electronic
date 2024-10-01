@@ -129,21 +129,36 @@ const CheckoutBarang = () => {
     let totalAmountCheckout = calculateTotalCheckout() + totalCostShipment;
 
     const handlePayment = async () => {
-        const dataPesan = {
-            id: checkout[0].id,
-            pesan: pesan
-        }
-        await postPesan(dataPesan);
 
-        const dataPembayaran = {
-            id: checkout[0].id,
-            alamatPengiriman: checkout[0].alamatPengirimanId,
-            gross_Amount: totalAmountCheckout,
-            item_details: checkout[0].items.map(item => item.product),
-            constumerId: checkout[0].userId,
+        if (selectedServiceCost.length < checkout.items.length) {
+            return toast.error('kamu belum pilih pendiriman');
         }
 
-        await getPayment(dataPembayaran);
+        try {
+            const dataPesan = {
+                id: checkout.id,
+                pesan: pesan
+            }
+            await postPesan(dataPesan);
+
+            const dataPembayaran = {
+                id: checkout.id,
+                alamatPengiriman: checkout.alamatPengirimanId,
+                gross_Amount: totalAmountCheckout,
+                item_details: checkout.items.map(item => item.product),
+                customerId: checkout.userId,
+            }
+
+            const pay = await getPayment(dataPembayaran);
+            console.log('pay', pay);
+
+            window.location.href = `${pay.data.dataPayment.paymentUrl}`;
+
+        } catch (error) {
+            console.error('error', error);
+            toast.error('pastikan alamat dan opsi pengiriman terisi');
+        }
+
 
     }
 
