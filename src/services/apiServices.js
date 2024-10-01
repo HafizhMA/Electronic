@@ -296,3 +296,13 @@ export const postPesan = async (data) => {
     throw error;
   }
 }
+
+export const getPayment = async (data) => {
+  try {
+    const response = await apiService.post(`/getPayment`, { data });
+    return response;
+  } catch (error) {
+    console.error('failed get payment', error);
+    throw error;
+  }
+}
