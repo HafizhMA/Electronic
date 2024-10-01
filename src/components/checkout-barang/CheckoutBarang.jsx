@@ -6,7 +6,7 @@ import { CheckoutContext } from '../../utils/CheckoutContext';
 import { formatter } from '../../utils/formatIDR';
 import AlamatModal from './AlamatModal';
 import { useForm } from 'react-hook-form';
-import { connectJasaToCartItems, createAlamat, deleteAlamat, getOngkir, postPesan, setAlamat, updateAlamat } from '../../services/apiServices';
+import { connectJasaToCartItems, createAlamat, deleteAlamat, getOngkir, getPayment, postPesan, setAlamat, updateAlamat } from '../../services/apiServices';
 import { toast, ToastContainer } from 'react-toastify';
 import ProvinsiOption from './ProvinsiOption';
 import CityOption from './CityOption';
@@ -124,19 +124,43 @@ const CheckoutBarang = () => {
         }
     }
 
-    const handlePayment = async () => {
-        const datas = {
-            id: checkout[0].id,
-            pesan: pesan
-        }
-        const pesanPost = await postPesan(datas);
-        console.log('success post pesan', pesanPost)
-    }
-
-
     const totalCostShipment = Object.values(selectedServiceCost).reduce((acc, value) => acc + value, 0);
 
     let totalAmountCheckout = calculateTotalCheckout() + totalCostShipment;
+
+    const handlePayment = async () => {
+
+        if (selectedServiceCost.length < checkout.items.length) {
+            return toast.error('kamu belum pilih pendiriman');
+        }
+
+        try {
+            const dataPesan = {
+                id: checkout.id,
+                pesan: pesan
+            }
+            await postPesan(dataPesan);
+
+            const dataPembayaran = {
+                id: checkout.id,
+                alamatPengiriman: checkout.alamatPengirimanId,
+                gross_Amount: totalAmountCheckout,
+                item_details: checkout.items.map(item => item.product),
+                customerId: checkout.userId,
+            }
+
+            const pay = await getPayment(dataPembayaran);
+            console.log('pay', pay);
+
+            window.location.href = `${pay.data.dataPayment.paymentUrl}`;
+
+        } catch (error) {
+            console.error('error', error);
+            toast.error('pastikan alamat dan opsi pengiriman terisi');
+        }
+
+
+    }
 
     return (
         <div className='py-[100px] container mx-auto'>

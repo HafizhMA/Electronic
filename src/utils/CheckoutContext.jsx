@@ -9,15 +9,14 @@ export const CheckoutProvider = ({ children }) => {
     const [alamatPengirim, setAlamatPengirim] = useState([]);
 
     const fetchcheckoutProducts = async () => {
-        const userid = localStorage.getItem('userid')
         try {
             const response = await getCheckoutProducts();
-            const checkouts = response.data.checkoutProduct;
-            const checkoutProduct = checkouts.filter(checkout => checkout.userId === userid)
-            const datas = checkoutProduct[0].items;
+            const checkouts = response.data;
+            console.log('response', response);
+            const datas = checkouts.items;
             setCheckoutProducts(datas);
-            setCheckout(checkoutProduct);
-            console.log('checkout', checkoutProduct);
+            setCheckout(checkouts);
+            console.log('checkout', checkouts);
             console.log('response checkout:', datas);
         } catch (error) {
             console.error('failed get checkout products', error);
