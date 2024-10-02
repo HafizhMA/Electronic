@@ -96,7 +96,7 @@ const DetailProduct = () => {
                         <h2 className='font-bold text-2xl'>{detailProduct.namaBarang}</h2>
                         <p className='text-slate-500'>{detailProduct.kategori}</p>
                         <p>Terjual 200+</p>
-                        <p className='mt-3 border-t-2 text-slate-700 font-bold text-2xl mb-2'>{formatter.format(detailProduct.hargaBarang * detailProduct.diskon / 100)}</p>
+                        <p className='mt-3 border-t-2 text-slate-700 font-bold text-2xl mb-2'>{formatter.format(detailProduct.hargaBarang - (detailProduct.hargaBarang * (detailProduct.diskon / 100)))}</p>
                         <p><span className='line-through mr-2 font-semibold'>{formatter.format(detailProduct.hargaBarang)}</span>
                             <span className='p-1 bg-sky-300 rounded-sm text-sky-700 font-semibold'>diskon {detailProduct.diskon}%</span></p>
                         <p className='mt-3 border-t-2 mb-2'><span className='border-solid border-b-2 border-slate-700 text-slate-700 font-semibold'>Spesifikasi</span></p>
