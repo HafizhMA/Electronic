@@ -1,8 +1,11 @@
 import React from 'react'
+import PaymentCheck from '../../components/payment-component/PaymentCheck'
 
 const PaymentCheckPages = () => {
     return (
-        <div>PaymentCheckPages</div>
+        <>
+            <PaymentCheck />
+        </>
     )
 }
 
