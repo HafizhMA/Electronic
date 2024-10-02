@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import CheckoutPage from "./pages/checkout-pages/CheckoutPage";
 import SearchProductPages from "./pages/search-product-pages/SearchProductPages";
 import CartPages from "./pages/cart-pages/CartPages";
+import PaymentCheckPages from "./pages/payment-pages/PaymentCheckPages";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route element={<ProtectRoutes />}>
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/cart" element={<CartPages />} />
+          <Route path="/order-list" element={<PaymentCheckPages />} />
         </Route>
 
         {/* if already login then cant access register and login again, must logout first */}
