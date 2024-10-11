@@ -146,6 +146,7 @@ const CheckoutBarang = () => {
                 alamatPengiriman: checkout.alamatPengirimanId,
                 gross_Amount: totalAmountCheckout,
                 item_details: checkout.items.map(item => item.product),
+                quantity: checkout.items.map(item => item.quantity),
                 customerId: checkout.userId,
             }
 
