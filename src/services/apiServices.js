@@ -306,3 +306,14 @@ export const getPayment = async (data) => {
     throw error;
   }
 }
+
+export const getCheckoutPayment = async () => {
+  const userId = localStorage.getItem('userid');
+  try {
+    const response = await apiService.post('/getCheckoutPayment', { userId });
+    return response;
+  } catch (error) {
+    console.error('failed get checkout payment', error);
+    throw error;
+  }
+}
