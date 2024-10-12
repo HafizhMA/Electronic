@@ -1,8 +1,20 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { CiSearch } from "react-icons/ci";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 
 const PaymentCheck = () => {
+    const [getCheckout, setGetCheckout] = useState([]);
+
+    const getCheckoutPayment = async () => {
+        const response = await getCheckoutPayment();
+        console.log('response checkout payment', response);
+        setGetCheckout(response.data.checkouts);
+    }
+
+    useEffect(() => {
+        getCheckoutPayment();
+    }, [])
+
     return (
         <div className='h-screen px-10 pt-24'>
             <p className='font-bold text-2xl mb-5'>Daftar Transaksi</p>
