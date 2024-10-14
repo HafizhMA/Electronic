@@ -1,6 +1,6 @@
 # Shopping cart
 
-website untuk penjualan barang-barang elektronik
+"A website for selling electronic goods, already integrated with shipping services from Raja Ongkir and the Midtrans payment gateway.
 
 ## Getting Started
 
@@ -25,5 +25,5 @@ npm run dev
 ## Home Page
 ![home](https://github.com/user-attachments/assets/9a153fa3-b46d-4924-8367-29f09d09d251)
 
-## Login Page video
-https://github.com/user-attachments/assets/59abaa5f-8a48-4cf1-b53c-d3c03935b734
+## Login Page gif
+![loginelectronic](https://github.com/user-attachments/assets/37faa894-1d7c-4c74-b703-9daa713f61bd)
