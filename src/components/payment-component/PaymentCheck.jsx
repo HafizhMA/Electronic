@@ -3,6 +3,7 @@ import { CiSearch } from "react-icons/ci";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { getCheckoutPayment } from '../../services/apiServices';
 import FormattedDate from '../../utils/FormattedDate';
+import { formatter } from '../../utils/formatIDR';
 
 const PaymentCheck = () => {
     const [getCheckoutsPayment, setGetCheckoutsPayment] = useState([]);
@@ -40,15 +41,15 @@ const PaymentCheck = () => {
                                 </div>
                                 <div className='grid grid-cols-5 gap-5 mb-5'>
                                     <div className='flex justify-center items-center'>
-                                        <img src="src\assets\monitor.jpg" className='object-cover w-40' alt="" />
+                                        <img src={product.img} className='object-cover w-40' alt="" />
                                     </div>
                                     <div className='col-span-3 flex flex-col justify-center'>
-                                        <p className='font-semibold'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi suscipit voluptate mollitia atque vel, quisquam in quam ut consequatur aut?</p>
-                                        <p>1 barang rp.123123</p>
+                                        <p className='font-semibold'>{product.name}</p>
+                                        <p>{product.quantity} barang {formatter.format(product.price)}</p>
                                     </div>
                                     <div className='flex flex-col justify-center items-center'>
                                         <p className='font-semibold'>Total Belanja</p>
-                                        <p>rp.123123</p>
+                                        <p>{formatter.format(product.price * product.quantity)}</p>
                                     </div>
                                 </div>
                             </div>
