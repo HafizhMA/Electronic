@@ -59,8 +59,8 @@ const Header = () => {
                   </div>
                 </div>
                 <ul tabIndex={0} className="mt-3 z-[1] flex justify-start p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                  <li><Logout /></li>
                   <li><button onClick={() => window.location.href = '/order-list'} className="transform-text-profile">Pembayaran</button></li>
+                  <li><Logout /></li>
                 </ul>
               </div>
             ) : (
