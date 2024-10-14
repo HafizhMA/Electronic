@@ -21,3 +21,6 @@ npm install
 ```bash
 npm run dev
 ```
+
+## Home Page
+![home](https://github.com/user-attachments/assets/9a153fa3-b46d-4924-8367-29f09d09d251)
