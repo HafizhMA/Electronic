@@ -33,22 +33,26 @@ const PaymentCheck = () => {
                             <p><FormattedDate dateString={item.createdAt} /></p>
                             <p className={`${item.payment[0].paymentStatus === 'SUCCESS' ? 'text-green-400 border-green-500' : 'text-red-400 border-2 border-red-500'} border-2 rounded px-2 bg-red-50 font-semibold`}>PAYMENT {item.payment[0].paymentStatus}</p>
                         </div>
-                        <di v>
-                            <p className='font-semibold text-md text-slate-600'>Nama Toko</p>
-                        </di>
-                        <div className='grid grid-cols-5 gap-5 mb-5'>
-                            <div className='flex justify-center items-center'>
-                                <img src="src\assets\monitor.jpg" className='object-cover w-40' alt="" />
+                        {item.purchasedItem?.product?.map((product, index) => (
+                            <div key={index}>
+                                <div className='mt-2'>
+                                    <p className='font-semibold text-md text-slate-600'>{product.merchant_name}</p>
+                                </div>
+                                <div className='grid grid-cols-5 gap-5 mb-5'>
+                                    <div className='flex justify-center items-center'>
+                                        <img src="src\assets\monitor.jpg" className='object-cover w-40' alt="" />
+                                    </div>
+                                    <div className='col-span-3 flex flex-col justify-center'>
+                                        <p className='font-semibold'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi suscipit voluptate mollitia atque vel, quisquam in quam ut consequatur aut?</p>
+                                        <p>1 barang rp.123123</p>
+                                    </div>
+                                    <div className='flex flex-col justify-center items-center'>
+                                        <p className='font-semibold'>Total Belanja</p>
+                                        <p>rp.123123</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div className='col-span-3 flex flex-col justify-center'>
-                                <p className='font-semibold'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi suscipit voluptate mollitia atque vel, quisquam in quam ut consequatur aut?</p>
-                                <p>1 barang rp.123123</p>
-                            </div>
-                            <div className='flex flex-col justify-center items-center'>
-                                <p className='font-semibold'>Total Belanja</p>
-                                <p>rp.123123</p>
-                            </div>
-                        </div>
+                        ))}
                         <div className='flex justify-end p-3'>
                             <p className='font-bold text-slate-600 border-2 border-slate-600 rounded px-2 py-1'>Lihat Detail Transaksi</p>
                         </div>

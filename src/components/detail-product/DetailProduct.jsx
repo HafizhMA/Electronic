@@ -20,6 +20,7 @@ const DetailProduct = () => {
     const [isFavorite, setIsFavorite] = useState(false);
     const { handleAddToCart } = useContext(CartContext);
     const location = useLocation();
+    const userId = localStorage.getItem('userid');
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -112,7 +113,7 @@ const DetailProduct = () => {
                         <p className='font-bold mt-2'>BERAT</p>
                         <p className='text-slate-500'>{detailProduct.berat}</p>
                     </div>
-                    <div className="detail-cart justify-self-center w-full">
+                    <div className={`${detailProduct.userId === userId ? 'hidden' : 'visible'} detail-cart justify-self-center w-full`}>
                         <div className='p-5 rounded border-solid border-2 border-slate-600'>
                             <button onClick={handleAddToCartClick}
                                 className='text-slate-700 flex justify-center items-center my-auto w-full mb-2 border-solid border-2 border-slate-600 p-1 rounded'>
@@ -132,7 +133,7 @@ const DetailProduct = () => {
                     <p>{detailProduct.deskripsiBarang}</p>
                 </div>
                 <RelatedProduct category={detailProduct.kategori} />
-                <div className='lg:hidden md:static mt-5'>
+                <div className={`lg:hidden md:static mt-5 ${detailProduct.userId === userId ? 'hidden' : 'visible'}`}>
                     <CheckoutFooter toggleFavorite={toggleFavorite} isFavorite={isFavorite} />
                 </div>
             </div>
