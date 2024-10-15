@@ -22,8 +22,11 @@ npm install
 npm run dev
 ```
 
-## Home Page
+## Home Page gif
 ![home](https://github.com/user-attachments/assets/0d5ecae5-4ee2-4e22-b5a1-be3f3f1de6a7)
 
 ## Login Page gif
 ![loginelectronic](https://github.com/user-attachments/assets/37faa894-1d7c-4c74-b703-9daa713f61bd)
+
+## Cart Page gif
+![cart electronic](https://github.com/user-attachments/assets/93d216b1-1787-4a0b-bd56-a9fe5c93b6cb)
