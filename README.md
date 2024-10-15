@@ -29,4 +29,4 @@ npm run dev
 ![loginelectronic](https://github.com/user-attachments/assets/37faa894-1d7c-4c74-b703-9daa713f61bd)
 
 ## Cart Page gif
-![cart electronic](https://github.com/user-attachments/assets/93d216b1-1787-4a0b-bd56-a9fe5c93b6cb)
+![2024-10-15 19-52-25 (online-video-cutter com)](https://github.com/user-attachments/assets/876d96e9-46b0-4448-bc31-51e7033950e1)
