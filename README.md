@@ -23,7 +23,7 @@ npm run dev
 ```
 
 ## Home Page
-![home](https://github.com/user-attachments/assets/9a153fa3-b46d-4924-8367-29f09d09d251)
+![home](https://github.com/user-attachments/assets/0d5ecae5-4ee2-4e22-b5a1-be3f3f1de6a7)
 
 ## Login Page gif
 ![loginelectronic](https://github.com/user-attachments/assets/37faa894-1d7c-4c74-b703-9daa713f61bd)
