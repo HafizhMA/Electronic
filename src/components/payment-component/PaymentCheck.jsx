@@ -8,26 +8,33 @@ import { Link } from 'react-router-dom';
 
 const PaymentCheck = () => {
     const [getCheckoutsPayment, setGetCheckoutsPayment] = useState([]);
+    const [filterTerm, setFilterTerm] = useState('');
 
     const fetchCheckoutPayment = async () => {
         const response = await getCheckoutPayment();
         console.log('response checkout payment', response);
-        setGetCheckoutsPayment(response.data.checkouts);
+        setGetCheckoutsPayment(response?.data?.checkouts);
     }
 
     useEffect(() => {
         fetchCheckoutPayment();
     }, [])
 
+    const filteredCheckouts = getCheckoutsPayment.filter(checkout =>
+        checkout.purchasedItem.product.some(product =>
+            product.name.toLowerCase().includes(filterTerm.toLowerCase())
+        )
+    );
+
     return (
         <div className='px-10 pt-24 min-h-screen'>
             <p className='font-bold text-2xl mb-5'>Daftar Transaksi</p>
             <div>
                 <div className='flex space-x-4 mb-5'>
-                    <input type="text" className='w-[60%] rounded ' placeholder='Cari pembelianmu disini' />
+                    <input type="text" className='w-[60%] rounded' value={filterTerm} onChange={(e) => setFilterTerm(e.target.value)} placeholder='Cari pembelianmu disini' />
                     <input type="date" className='rounded' />
                 </div>
-                {getCheckoutsPayment.map((item) => (
+                {filteredCheckouts.map((item) => (
                     <div key={item.id} className='bg-slate-50 border-2 border-slate-600 rounded p-5 space-y-4 mb-5'>
                         <div className='flex space-x-4 items-center'>
                             <MdOutlineLocalGroceryStore size={23} />
