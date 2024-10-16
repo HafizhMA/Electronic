@@ -12,12 +12,9 @@ export const CheckoutProvider = ({ children }) => {
         try {
             const response = await getCheckoutProducts();
             const checkouts = response.data;
-            console.log('response', response);
             const datas = checkouts.items;
             setCheckoutProducts(datas);
             setCheckout(checkouts);
-            console.log('checkout', checkouts);
-            console.log('response checkout:', datas);
         } catch (error) {
             console.error('failed get checkout products', error);
         }
@@ -30,7 +27,6 @@ export const CheckoutProvider = ({ children }) => {
             const alamat = response.data.Alamat;
             const alamatUser = alamat.filter(item => item.userId === userid);
             setAlamatPengirim(alamatUser);
-            console.log('alamat pengirim', alamatUser);
         } catch (error) {
             console.error('failed get alamat', error)
         }

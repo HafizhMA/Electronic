@@ -23,11 +23,6 @@ export const CartProvider = ({ children }) => {
             const cartItems = response.data.cart;
             const filteredCart = cartItems.filter(item => item.userId === userid);
             setProducts(filteredCart);
-            console.log('response', response);
-            console.log('cartItems', cartItems);
-
-
-
         } catch (error) {
             console.error('error fetching data.', error);
         }
@@ -98,7 +93,6 @@ export const CartProvider = ({ children }) => {
             const userId = localStorage.getItem('userid');
             const productId = detailProduct.id;
             const response = await addOneCartProduct({ userId, productId });
-            console.log("handleAddToCart", response);
             fetchData();
             return response.data.message;
         } catch (error) {
@@ -135,7 +129,6 @@ export const CartProvider = ({ children }) => {
 
         try {
             const response = await getCheckout(userId, selectedItems);
-            console.log('Success checkout', response);
             toast.success('berhasil checkout')
             setTimeout(() => {
                 window.location.href = '/checkout'
