@@ -30,3 +30,6 @@ npm run dev
 
 ## Cart Page gif
 ![2024-10-15 19-52-25 (online-video-cutter com)](https://github.com/user-attachments/assets/876d96e9-46b0-4448-bc31-51e7033950e1)
+
+## Checkout Page gif
+![checkout elc](https://github.com/user-attachments/assets/b933e630-247e-4453-a06f-02a8516f55fa)
