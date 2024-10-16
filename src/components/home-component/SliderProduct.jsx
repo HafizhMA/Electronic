@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { allProducts } from '../../services/apiServices';
 import { Link } from 'react-router-dom';
 import { formatter } from '../../utils/formatIDR';
+import { maxFont } from '../../utils/maxFont';
 
 const SliderProduct = () => {
     const [products, setProducts] = useState([]);
@@ -57,21 +58,19 @@ const SliderProduct = () => {
         ]
     };
 
-
-
     return (
         <div className='my-14'>
             <p className='text-lg font-bold'>Produk Untuk Kamu</p>
             <div className='bg-slate-600 py-5 px-6 rounded-md'>
                 <Slider {...settings}>
                     {products.map((product) => (
-                        <Link to={`/detail/${product.id}`} key={product.id} className='border bg-white border-gray-600 rounded overflow-hidden'>
+                        <Link to={`/detail/${product.id}`} key={product.id} className='border bg-white border-gray-600 rounded overflow-hidden min-h-[260px]'>
                             <div>
                                 <img className='related-img' src={product.img} alt={product.namaBarang} />
                             </div>
                             <div className='p-1'>
-                                <p className='font-bold'>{product.namaBarang}</p>
-                                <p className='font-semibold'>{product.deskripsiBarang}</p>
+                                <p className='font-bold'>{maxFont(product.namaBarang)}</p>
+                                <p className='font-semibold'>{maxFont(product.deskripsiBarang)}</p>
                                 <p className='text-slate-600'>{formatter.format(product.hargaBarang - product.hargaBarang * product.diskon / 100)}</p>
                                 <p className='text-sm'><span className='text-red-500'>{product.diskon}%</span> <span className='line-through text-slate-400'>Rp {formatter.format(product.hargaBarang)}</span></p>
                             </div>
