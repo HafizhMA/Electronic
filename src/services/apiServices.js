@@ -178,7 +178,6 @@ export const updatePassword = async (token, password) => {
 export const searchProduct = async (product) => {
   try {
     const response = await apiService.get(`/products/search?query=${encodeURIComponent(product)}`)
-    console.log("res : " + response)
     return response
   } catch (error) {
     console.error('failed get searched product', error)

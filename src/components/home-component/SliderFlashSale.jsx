@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { allProducts } from '../../services/apiServices';
 import { Link } from 'react-router-dom';
 import { formatter } from '../../utils/formatIDR';
+import { maxFont } from '../../utils/maxFont';
 
 const SliderFlashSale = () => {
     const [products, setProducts] = useState([]);
@@ -68,8 +69,8 @@ const SliderFlashSale = () => {
                                 <img className='related-img' src={product.img} alt={product.namaBarang} />
                             </div>
                             <div className='p-1'>
-                                <p className='font-bold'>{product.namaBarang}</p>
-                                <p className='font-semibold'>{product.deskripsiBarang}</p>
+                                <p className='font-bold'>{maxFont(product.namaBarang)}</p>
+                                <p className='font-semibold'>{maxFont(product.deskripsiBarang)}</p>
                                 <p className='text-slate-600'>{formatter.format(product.hargaBarang - product.hargaBarang * product.diskon / 100)}</p>
                                 <p className='text-sm'><span className='text-red-500'>{product.diskon}%</span> <span className='line-through text-slate-400'>Rp {formatter.format(product.hargaBarang)}</span></p>
                             </div>
