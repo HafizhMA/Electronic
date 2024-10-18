@@ -44,8 +44,8 @@ const PaymentCheck = () => {
             : getCheckoutsPayment;
 
     return (
-        <div className='px-10 pt-24 min-h-screen'>
-            <p className='font-bold text-2xl mb-5'>Daftar Transaksi</p>
+        <div className='px-10 min-h-screen'>
+            <p className='font-bold text-2xl mb-5 my-24'>Daftar Transaksi</p>
             <div>
                 <div className='flex space-x-4 mb-5'>
                     <input

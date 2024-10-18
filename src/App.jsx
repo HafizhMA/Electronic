@@ -13,6 +13,7 @@ import CheckoutPage from "./pages/checkout-pages/CheckoutPage";
 import SearchProductPages from "./pages/search-product-pages/SearchProductPages";
 import CartPages from "./pages/cart-pages/CartPages";
 import PaymentCheckPages from "./pages/payment-pages/PaymentCheckPages";
+import DetailHistoryPaymentPage from "./pages/payment-pages/DetailHistoryPaymentPage";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/cart" element={<CartPages />} />
           <Route path="/order-list" element={<PaymentCheckPages />} />
+          <Route path="/detail-history-order/:id" element={<DetailHistoryPaymentPage />} />
         </Route>
 
         {/* if already login then cant access register and login again, must logout first */}
