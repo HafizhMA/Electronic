@@ -31,7 +31,7 @@ function App() {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/cart" element={<CartPages />} />
           <Route path="/order-list" element={<PaymentCheckPages />} />
-          <Route path="/detail-history-order/:id" element={<DetailHistoryPaymentPage />} />
+          <Route path="/order-list/:id" element={<DetailHistoryPaymentPage />} />
         </Route>
 
         {/* if already login then cant access register and login again, must logout first */}

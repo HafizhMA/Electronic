@@ -44,8 +44,8 @@ const PaymentCheck = () => {
             : getCheckoutsPayment;
 
     return (
-        <div className='px-10 min-h-screen'>
-            <p className='font-bold text-2xl mb-5 my-24'>Daftar Transaksi</p>
+        <div className='px-10 py-5 min-h-screen'>
+            <p className='font-bold text-2xl mb-5 my-20'>Daftar Transaksi</p>
             <div>
                 <div className='flex space-x-4 mb-5'>
                     <input
@@ -100,7 +100,7 @@ const PaymentCheck = () => {
                                 </div>
                             ))}
                             <div className='flex justify-end p-3'>
-                                <p className='font-bold text-slate-600 border-2 border-slate-600 rounded px-2 py-1'>Lihat Detail Transaksi</p>
+                                <Link to={`/order-list/${item.id}`} className='font-bold text-slate-600 border-2 border-slate-600 rounded px-2 py-1'>Lihat Detail Transaksi</Link>
                             </div>
                         </div>
                     ))

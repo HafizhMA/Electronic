@@ -109,6 +109,7 @@ const CheckoutBarang = () => {
                 checkoutProduct: checkout,
                 userId: userId
             };
+
             const ongkir = await getOngkir(data);
             const services = ongkir.data.ongkir.rajaongkir.results[0].costs;
             console.log('services', services);
