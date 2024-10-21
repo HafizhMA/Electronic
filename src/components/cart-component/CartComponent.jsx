@@ -74,9 +74,9 @@ const CartComponent = () => {
                                                 <button onClick={() => handleIncrement(item.id)} className="bg-gray-300 text-gray-700 hover:bg-gray-400 px-4 py-2 rounded-r">+</button>
                                             </div>
                                             <div className='gap-3 flex'>
-                                                <button onClick={handleFavorite}>
+                                                {/* <button onClick={handleFavorite}>
                                                     {favorite ? <MdOutlineFavorite size={20} /> : <MdOutlineFavoriteBorder size={20} />}
-                                                </button>
+                                                </button> */}
                                                 <FaRegTrashAlt size={20} onClick={() => handleDelete(item.id)} className='cursor-pointer' />
                                             </div>
                                         </div>

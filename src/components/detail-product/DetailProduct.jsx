@@ -121,10 +121,10 @@ const DetailProduct = () => {
                                 Keranjang
                             </button>
                             <button className='bg-slate-600 text-white w-full p-1 rounded mb-2'>Beli</button>
-                            <div className='flex justify-around p-1'>
+                            {/* <div className='flex justify-around p-1'>
                                 <button onClick={toggleFavorite} className='flex items-center'> {isFavorite ? <MdFavorite className='me-2' size={20} /> : <MdFavoriteBorder className='me-2' size={20} />} Wishlist</button>
                                 <button className='flex items-center'><CiShare2 className='me-2' size={20} /> Share</button>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
