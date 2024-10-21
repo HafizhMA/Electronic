@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUrl = 'http://localhost:2000';
+const apidev = 'http://localhost:2000';
 const apiProd = 'https://electronic-backend-production.up.railway.app/'
 // Membuat instance axios dengan konfigurasi tertentu
 export const apiService = axios.create({
@@ -314,6 +314,16 @@ export const getCheckoutPayment = async () => {
     return response;
   } catch (error) {
     console.error('failed get checkout payment', error);
+    throw error;
+  }
+}
+
+export const getOneHistoryCheckout = async (id) => {
+  try {
+    const response = await apiService.post('/getOneHistoryCheckout', { id });
+    return response.data;
+  } catch (error) {
+    console.error('failed get one history checkout', error);
     throw error;
   }
 }
