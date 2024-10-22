@@ -6,7 +6,7 @@ import { MdFavorite } from "react-icons/md";
 import { CiShare2 } from "react-icons/ci";
 import RelatedProduct from './RelatedProduct';
 import CheckoutFooter from './CheckoutFooter';
-import { getDetailProduct } from '../../services/apiServices';
+import { buyProduct, getDetailProduct } from '../../services/apiServices';
 import { formatter } from '../../utils/formatIDR';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -80,6 +80,26 @@ const DetailProduct = () => {
         return <div>no such product...</div>; // or a placeholder UI
     }
 
+    const handleBuyProduct = async () => {
+        try {
+            const userId = localStorage.getItem('userid');
+            if (!userId) {
+                throw new Error('User not logged in');
+            }
+
+            const data = {
+                userId,
+                productId: detailProduct.id,
+            };
+
+            const response = await buyProduct(data);
+            console.log(response);
+            window.location.href = '/checkout';
+        } catch (error) {
+            console.error('Error during purchase:', error);
+        }
+    };
+
     return (
         <>
             <ToastContainer />
@@ -120,7 +140,7 @@ const DetailProduct = () => {
                                 <BsCart4 className='me-2' />
                                 Keranjang
                             </button>
-                            <button className='bg-slate-600 text-white w-full p-1 rounded mb-2'>Beli</button>
+                            <button onClick={handleBuyProduct} className='bg-slate-600 text-white w-full p-1 rounded mb-2'>Beli</button>
                             {/* <div className='flex justify-around p-1'>
                                 <button onClick={toggleFavorite} className='flex items-center'> {isFavorite ? <MdFavorite className='me-2' size={20} /> : <MdFavoriteBorder className='me-2' size={20} />} Wishlist</button>
                                 <button className='flex items-center'><CiShare2 className='me-2' size={20} /> Share</button>
