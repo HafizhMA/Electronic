@@ -82,6 +82,16 @@ export const getCheckoutProducts = async () => {
   }
 }
 
+export const buyProduct = async (data) => {
+  try {
+    const response = await apiService.post('/buyProduct', { data });
+    return response;
+  } catch (error) {
+    console.error('Buy failed', error);
+    throw error;
+  }
+}
+
 export const incrementCartItemQuantity = async (id) => {
   try {
     const response = await apiService.patch(`/cart/increment/${id}`)
