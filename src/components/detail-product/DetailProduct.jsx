@@ -77,7 +77,7 @@ const DetailProduct = () => {
     };
 
     if (!detailProduct) {
-        return <div>no such product...</div>; // or a placeholder UI
+        return <div>no such product...</div>;
     }
 
     const handleBuyProduct = async () => {
