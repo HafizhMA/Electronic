@@ -13,8 +13,13 @@ const PaymentCheck = () => {
 
     const fetchCheckoutPayment = async () => {
         const response = await getCheckoutPayment();
-        console.log('response checkout payment', response);
-        setGetCheckoutsPayment(response?.data?.checkouts);
+        if (response?.data?.checkouts) {
+            console.log('response checkout payment', response);
+            setGetCheckoutsPayment(response.data.checkouts);
+        } else {
+            console.log('No checkouts found or response is null');
+            setGetCheckoutsPayment([]);
+        }
     }
 
     useEffect(() => {
