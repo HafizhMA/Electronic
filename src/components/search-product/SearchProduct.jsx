@@ -51,7 +51,7 @@ const SearchProduct = () => {
         <div className='search-page-component py-[100px]'>
             <div className='grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1 h-screen'>
                 <div className='mb-8 justify-self-center'>
-                    <p className='font-bold mb-4 lg:block md:flex sm:flex'>Filter</p>
+                    <p className='font-bold mb-4 lg:block md:flex sm:flex'>Filter (coming soon)</p>
                     <div className='flex lg:flex-col flex-wrap justify-center gap-1'>
                         <div className='filter-dropdown'>
                             <div onClick={handleClickJenisBarang} className='bg-slate-500 text-white w-32 h-8 text-center flex items-center justify-center rounded cursor-pointer'>
