@@ -26,8 +26,8 @@ const PaymentCheck = () => {
         fetchCheckoutPayment();
     }, [])
 
-    const filteredByName = getCheckoutsPayment.filter(checkout =>
-        checkout.purchasedItem.product.some(product =>
+    const filteredByName = getCheckoutsPayment?.filter(checkout =>
+        checkout?.purchasedItem?.product?.some(product =>
             product.name.toLowerCase().includes(filterTerm.toLowerCase())
         )
     );
@@ -78,10 +78,10 @@ const PaymentCheck = () => {
                                 <p className='font-semibold'>Belanja</p>
                                 <p><FormattedDate dateString={item.createdAt} /></p>
                                 <Link
-                                    to={item.payment[0].paymentUrl}
-                                    className={`${item.payment[0].paymentStatus === 'SUCCESS' ? 'text-green-400 border-green-500' : 'text-red-400 border-2 border-red-500'} border-2 rounded px-2 bg-red-50 font-semibold`}
+                                    to={item?.payment[0]?.paymentUrl}
+                                    className={`${item?.payment[0]?.paymentStatus === 'SUCCESS' ? 'text-green-400 border-green-500' : 'text-red-400 border-2 border-red-500'} border-2 rounded px-2 bg-red-50 font-semibold`}
                                 >
-                                    PAYMENT {item.payment[0].paymentStatus}
+                                    PAYMENT {item?.payment[0]?.paymentStatus}
                                 </Link>
                             </div>
                             {item.purchasedItem?.product?.map((product, index) => (
