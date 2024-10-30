@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { searchProduct } from '../../services/apiServices';
 import { TfiAlert } from "react-icons/tfi";
+import { maxFont } from '../../utils/maxFont';
 
 const SearchProduct = () => {
     const [products, setProducts] = useState([]);
@@ -118,7 +119,7 @@ const SearchProduct = () => {
                                         <img src={item.img} alt={item.namaBarang} className='w-full sm:h-[250px] lg:h-[140px] md:h-[150px] object-cover rounded' />
                                     </div>
                                     <div className='p-2'>
-                                        <p className='font-semibold text-lg'>{item.namaBarang}</p>
+                                        <p className='font-semibold text-lg'>{maxFont(item.namaBarang)}</p>
                                         <p className='text-slate-600 font-semibold text-sm'>{item.deskripsiBarang}</p>
                                         <p>Rp. {Number(item.hargaBarang).toLocaleString('id-ID')}</p>
                                     </div>
