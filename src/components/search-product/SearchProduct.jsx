@@ -78,12 +78,8 @@ const SearchProduct = () => {
                                 <span className='font-semibold'>Jenis Toko</span>
                             </div>
                             <ul className={`bg-white text-black mt-2 rounded p-2 w-32 ${jenisToko ? 'block' : 'hidden'}`}>
-                                <div className='flex items-center justify-between'>
-                                    <li>Official</li>
-                                    <input type="checkbox" name="" id="" />
-                                </div>
-                                <div className='flex items-center justify-between my-3'>
-                                    <li>Individu Star</li>
+                                <div className='flex items-center justify-between mb-3'>
+                                    <li>Terverifikasi</li>
                                     <input type="checkbox" name="" id="" />
                                 </div>
                                 <div className='flex items-center justify-between'>
@@ -92,7 +88,7 @@ const SearchProduct = () => {
                                 </div>
                             </ul>
                         </div>
-                        <div className='filter-dropdown'>
+                        {/* <div className='filter-dropdown'>
                             <div onClick={handleClickJenisHarga} className={`bg-slate-500 text-white w-32 h-8 text-center flex items-center justify-center rounded cursor-pointer`}>
                                 <span className='font-semibold'>Harga</span>
                             </div>
@@ -106,7 +102,7 @@ const SearchProduct = () => {
                                     <input type="checkbox" name="" id="" />
                                 </div>
                             </ul>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className='lg:col-span-3 lg:md:justify-self-start md:justify-self-center sm:justify-self-center'>
