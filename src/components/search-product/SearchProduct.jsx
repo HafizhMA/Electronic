@@ -9,6 +9,8 @@ const SearchProduct = () => {
     const [jenisBarang, setJenisBarang] = useState(false);
     const [jenisToko, setJenisToko] = useState(false);
     const [jenisHarga, setJenisHarga] = useState(false);
+    const [filterJenisBarang, setFilterJenisBarang] = useState({ terlaris: false, termurah: false, termahal: false });
+    const [filterJenisToko, setFilterJenisToko] = useState({ terverifikasi: false, individu: false });
     const [nullProduct, setNullProduct] = useState('')
     const location = useLocation();
     const query = new URLSearchParams(location.search).get('query');
@@ -36,17 +38,19 @@ const SearchProduct = () => {
         }
     }, [query]);
 
-    const handleClickJenisBarang = () => {
+    const handleJenisBarang = () => {
         setJenisBarang(!jenisBarang);
     }
 
-    const handleClickJenisToko = () => {
+    const handleShowJenisToko = () => {
         setJenisToko(!jenisToko);
     }
 
-    const handleClickJenisHarga = () => {
-        setJenisHarga(!jenisHarga);
-    }
+    // const handleClickJenisHarga = () => {
+    //     setJenisHarga(!jenisHarga);
+    // }
+
+
 
     return (
         <div className='search-page-component py-[100px]'>
@@ -55,7 +59,7 @@ const SearchProduct = () => {
                     <p className='font-bold mb-4 lg:block md:flex sm:flex'>Filter (coming soon)</p>
                     <div className='flex lg:flex-col flex-wrap justify-center gap-1'>
                         <div className='filter-dropdown'>
-                            <div onClick={handleClickJenisBarang} className='bg-slate-500 text-white w-32 h-8 text-center flex items-center justify-center rounded cursor-pointer'>
+                            <div onClick={handleJenisBarang} className='bg-slate-500 text-white w-32 h-8 text-center flex items-center justify-center rounded cursor-pointer'>
                                 <span className='font-semibold'>Jenis Barang</span>
                             </div>
                             <ul className={`bg-white text-black mt-2 rounded p-2 w-32 ${jenisBarang ? 'block' : 'hidden'}`}>
@@ -74,7 +78,7 @@ const SearchProduct = () => {
                             </ul>
                         </div>
                         <div className='filter-dropdown'>
-                            <div onClick={handleClickJenisToko} className={`bg-slate-500 text-white w-32 h-8 text-center flex items-center justify-center rounded cursor-pointer`}>
+                            <div onClick={handleShowJenisToko} className={`bg-slate-500 text-white w-32 h-8 text-center flex items-center justify-center rounded cursor-pointer`}>
                                 <span className='font-semibold'>Jenis Toko</span>
                             </div>
                             <ul className={`bg-white text-black mt-2 rounded p-2 w-32 ${jenisToko ? 'block' : 'hidden'}`}>
