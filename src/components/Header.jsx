@@ -4,15 +4,30 @@ import Logout from "./register-login/Logout";
 import { BsCart4 } from "react-icons/bs";
 import { IoHomeOutline } from "react-icons/io5";
 import { CartContext } from "../utils/CartContext";
+import { getUserLogin } from "../services/apiServices";
 
 const Header = () => {
   const [login, setLogin] = useState(false);
   const [query, setQuery] = useState("");
   const { totalQuantity } = useContext(CartContext);
+  const [user, setUser] = useState([]);
 
   const navigate = useNavigate()
 
+  const getUserLoginData = async () => {
+    try {
+      const response = await getUserLogin();
+      setUser(response.data.user);
+      console.log('data user', response);
+    } catch (error) {
+      console.log('failed', error);
+
+    }
+  }
+
   useEffect(() => {
+    getUserLoginData();
+
     const user = localStorage.getItem('token');
     if (user) {
       setLogin(true);
@@ -55,13 +70,13 @@ const Header = () => {
               <div className="dropdown dropdown-end">
                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                   <div className="w-10 rounded-full">
-                    <img alt="Tailwind CSS Navbar component" src="https://images.unsplash.com/photo-1472491235688-bdc81a63246e?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+                    <img alt="Tailwind CSS Navbar component" src={user.foto_profile} />
                   </div>
                 </div>
                 <ul tabIndex={0} className="mt-3 z-[1] flex justify-start p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                  <li><button className="transform-text-profile">Profile (coming soon)</button></li>
+                  <li><Link to='/edit-profile' className="transform-text-profile">Profile (coming soon)</Link></li>
                   <li><button className="transform-text-profile">Form Jual (coming soon)</button></li>
-                  <li><button onClick={() => window.location.href = '/order-list'} className="transform-text-profile">Pembayaran</button></li>
+                  <li><Link to='/order-list' className="transform-text-profile">Pembayaran</Link></li>
                   <li><Logout /></li>
                 </ul>
               </div>
