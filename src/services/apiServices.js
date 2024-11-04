@@ -148,6 +148,17 @@ export const login = async (user) => {
   }
 };
 
+export const getUserLogin = async () => {
+  const userId = localStorage.getItem('userid');
+  try {
+    const response = await apiService.post("/userLogin", { userId });
+    return response;
+  } catch (error) {
+    console.error("failed", error);
+    throw error;
+  }
+}
+
 export const handleLogout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("userid");
