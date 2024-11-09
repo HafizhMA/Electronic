@@ -3,9 +3,15 @@ import React, { useState } from 'react'
 const EditProfile = () => {
     const [File, setFile] = useState();
 
+    const preset = import.meta.env.VITE_ClOUDINARY_CLOUD_NAME;
+
     const handleChangeFile = (e) => {
-        console.log(e.target.files);
-        setFile(URL.createObjectURL(e.target.files[0]));
+        const selectedFile = e.target.files[0]
+        setFile(URL.createObjectURL(selectedFile));
+
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        formData.append('upload_preset',)
     }
 
 
