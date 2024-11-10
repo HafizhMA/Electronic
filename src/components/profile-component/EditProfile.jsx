@@ -3,6 +3,8 @@ import axios from 'axios';
 import { uploadImgProfile } from '../../services/apiServices';
 
 const EditProfile = () => {
+    const [username, setUsername] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
 
     const preset = import.meta.env.VITE_CLOUDINARY_PRESET_NAME;
     const cloudName = import.meta.env.VITE_ClOUDINARY_CLOUD_NAME;
@@ -36,17 +38,20 @@ const EditProfile = () => {
                 <div className='flex flex-col space-y-3'>
                     <div className='flex justify-between space-x-2 items-center'>
                         <label htmlFor="">Username</label>
-                        <input type="text" className='text-black' />
+                        <input type="text" className='text-black' value={username} onChange={(e) => setUsername(e.target.value)} />
                     </div>
                     <div className='flex justify-between space-x-2 items-center'>
                         <label htmlFor="">Phone Number</label>
-                        <input type="text" className='text-black' />
+                        <input type="text" className='text-black' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
                     </div>
                     <div className='flex justify-between space-x-2 items-center'>
                         <input type="file"
                             onChange={handleChangeFile}
                             accept="image/*"
                             className='rounded' />
+                    </div>
+                    <div className='text-end'>
+                        <button className='px-2 py-1 rounded bg-white text-slate-600 font-semibold hover:text-slate-800'>Submit</button>
                     </div>
                 </div>
             </form>
