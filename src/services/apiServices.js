@@ -176,6 +176,25 @@ export const forgotPassword = async (email) => {
   }
 };
 
+export const uploadImgProfile = async (imgUrl) => {
+  const userId = localStorage.getItem('userid');
+  try {
+    const response = await apiService.post("/image_profile", { userId, imgUrl });
+    return response
+  } catch (error) {
+    console.error('failed upload image', error)
+  }
+}
+
+export const updateUserData = async (data) => {
+  try {
+    const response = await apiService.post("/update-user-data", { data });
+    return response
+  } catch (error) {
+    console.error('failed upload image', error)
+  }
+}
+
 
 export const checkToken = async (token) => {
   try {
