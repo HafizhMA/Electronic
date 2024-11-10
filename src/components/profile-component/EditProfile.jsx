@@ -5,12 +5,14 @@ import { uploadImgProfile } from '../../services/apiServices';
 const EditProfile = () => {
     const [username, setUsername] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const preset = import.meta.env.VITE_CLOUDINARY_PRESET_NAME;
     const cloudName = import.meta.env.VITE_ClOUDINARY_CLOUD_NAME;
 
     const handleChangeFile = async (e) => {
         const selectedFile = e.target.files[0]
+        setLoading(true);
 
         const formData = new FormData();
         formData.append('file', selectedFile);
@@ -28,6 +30,8 @@ const EditProfile = () => {
             const updateUser = await uploadImgProfile(imgUrl);
         } catch (error) {
             console.error('Error uploading image:', error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -49,6 +53,7 @@ const EditProfile = () => {
                             onChange={handleChangeFile}
                             accept="image/*"
                             className='rounded' />
+                        <p className={`${loading ? 'visible' : 'hidden'}`}>Loading...</p>
                     </div>
                     <div className='text-end'>
                         <button className='px-2 py-1 rounded bg-white text-slate-600 font-semibold hover:text-slate-800'>Submit</button>
