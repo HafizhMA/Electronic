@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import { uploadImgProfile } from '../../services/apiServices';
 
 const EditProfile = () => {
-    const [File, setFile] = useState();
 
     const preset = import.meta.env.VITE_CLOUDINARY_PRESET_NAME;
     const cloudName = import.meta.env.VITE_ClOUDINARY_CLOUD_NAME;
 
     const handleChangeFile = async (e) => {
         const selectedFile = e.target.files[0]
-        setFile(URL.createObjectURL(selectedFile));
 
         const formData = new FormData();
         formData.append('file', selectedFile);
@@ -21,11 +20,12 @@ const EditProfile = () => {
                 `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
                 formData
             );
-            console.log('Image URL:', response.data);
-            alert('Image uploaded successfully!');
+
+            const imgUrl = response.data.secure_url
+
+            const updateUser = await uploadImgProfile(imgUrl);
         } catch (error) {
             console.error('Error uploading image:', error);
-            alert('Failed to upload image.');
         }
     }
 
