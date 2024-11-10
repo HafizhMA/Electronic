@@ -23,7 +23,7 @@ const CartComponent = () => {
     } = useContext(CartContext);
 
     return (
-        <div className='container mx-auto px-8 min-h-screen'>
+        <div className='mx-auto px-8 min-h-screen'>
             <ToastContainer />
             <div className='py-[6rem]'>
                 <p className='font-bold text-2xl'>Keranjang</p>

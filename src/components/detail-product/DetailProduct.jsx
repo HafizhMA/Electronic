@@ -103,7 +103,7 @@ const DetailProduct = () => {
     return (
         <>
             <ToastContainer />
-            <div className="container mx-auto px-5 pt-[6rem] pb-20 overflow-hidden">
+            <div className="mx-auto px-5 pt-[6rem] pb-20 overflow-hidden">
                 <div className='grid lg:grid-cols-4 grid-cols-1 lg:gap-4 mb-10'>
                     <div className="img-detail overflow-hidden lg:h-60 w-full"
                         onMouseMove={handleMouseMove}
