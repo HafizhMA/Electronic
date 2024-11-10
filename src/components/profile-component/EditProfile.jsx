@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { uploadImgProfile } from '../../services/apiServices';
+import { updateUserData, uploadImgProfile } from '../../services/apiServices';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditProfile = () => {
     const [username, setUsername] = useState('');
@@ -35,10 +37,28 @@ const EditProfile = () => {
         }
     }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const data = {
+                userId: localStorage.getItem('userid'),
+                username,
+                phoneNumber
+            }
+            const updateUser = await updateUserData(data);
+            toast.success('success update')
+            window.location.href = '/'
+        } catch (error) {
+            toast.error('update failed')
+            console.error('failed update user data', error);
+        }
+    }
+
 
     return (
         <div className='min-h-screen flex flex-col items-center justify-center text-white'>
-            <form className='bg-slate-600 rounded p-5'>
+            <ToastContainer />
+            <form onSubmit={handleSubmit} className='bg-slate-600 rounded p-5'>
                 <div className='flex flex-col space-y-3'>
                     <div className='flex justify-between space-x-2 items-center'>
                         <label htmlFor="">Username</label>
