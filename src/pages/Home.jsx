@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <>
       <SwiperHero />
-      <div className="container px-3 mx-auto">
+      <div className="px-3 mx-auto">
         <SliderProduct />
         <SliderFlashSale />
       </div>

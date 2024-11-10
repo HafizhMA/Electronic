@@ -46,7 +46,7 @@ const Header = () => {
   return (
     <header>
       <nav className="z-50 fixed top-0 bg-slate-600 w-full p-4">
-        <div className="container mx-auto flex justify-between">
+        <div className="px-2 mx-auto flex justify-between">
           <div className="flex items-center">
             <Link to='/' className="text-white logo-header font-bold text-2xl hidden lg:inline-block me-1">Electronic</Link>
           </div>
