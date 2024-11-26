@@ -20,6 +20,15 @@ export const allProducts = async () => {
   }
 };
 
+export const createProduct = async (data) => {
+  try {
+    const response = await apiService.post('/products', { data });
+    return response;
+  } catch (error) {
+    throw error
+  }
+}
+
 export const getProductCart = async () => {
   try {
     const response = await apiService.get(`/getcarts`);

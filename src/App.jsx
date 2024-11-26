@@ -15,6 +15,7 @@ import CartPages from "./pages/cart-pages/CartPages";
 import PaymentCheckPages from "./pages/payment-pages/PaymentCheckPages";
 import DetailHistoryPaymentPage from "./pages/payment-pages/DetailHistoryPaymentPage";
 import EditProfilePages from "./pages/profile-pages/EditProfilePages";
+import FormJualPage from "./pages/profile-pages/FormJualPage";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
 
         {/* must login first to access */}
         <Route element={<ProtectRoutes />}>
+          <Route path="/sell-product" element={<FormJualPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/cart" element={<CartPages />} />
           <Route path="/order-list" element={<PaymentCheckPages />} />
