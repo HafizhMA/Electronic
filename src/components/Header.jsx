@@ -75,7 +75,7 @@ const Header = () => {
                 </div>
                 <ul tabIndex={0} className="mt-3 z-[1] flex justify-start p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                   <li><Link to='/edit-profile' className="transform-text-profile">Profile</Link></li>
-                  <li><button className="transform-text-profile">Form Jual (coming soon)</button></li>
+                  <li><Link to='/sell-product' className="transform-text-profile">Form Jual (coming soon)</Link></li>
                   <li><Link to='/order-list' className="transform-text-profile">Pembayaran</Link></li>
                   <li><Logout /></li>
                 </ul>
