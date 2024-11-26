@@ -4,7 +4,7 @@ const apidev = 'http://localhost:2000';
 const apiProd = 'https://electronic-backend-production.up.railway.app/'
 // Membuat instance axios dengan konfigurasi tertentu
 export const apiService = axios.create({
-  baseURL: apidev,
+  baseURL: apiProd,
   headers: {
     "Content-Type": "application/json",
     "Authorization": `Bearer ${localStorage.getItem('token')}`,
@@ -19,6 +19,15 @@ export const allProducts = async () => {
     throw error;
   }
 };
+
+export const createProduct = async (data) => {
+  try {
+    const response = await apiService.post('/products', { data });
+    return response;
+  } catch (error) {
+    throw error
+  }
+}
 
 export const getProductCart = async () => {
   try {
